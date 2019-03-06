@@ -12,14 +12,16 @@ export const FETCH_START = "FETCH_START";
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 
-export const fetchCharacters = () => dispatch => {
-  dispatch({ type: START_FETCH });
+export const getCharacters = () => dispatch => {
+  dispatch({ type: FETCH_START });
   axios
     .get("https://swapi.co/api/people")
     .then(res => {
-      console.log(res.data);
+      console.log(res.data.results, "success");
+      dispatch({ type: FETCH_SUCCESS, payload: res.data.results });
     })
     .catch(err => {
       console.log(err.response);
+      dispatch({ type: FETCH_FAILURE, payload: null });
     });
 };
